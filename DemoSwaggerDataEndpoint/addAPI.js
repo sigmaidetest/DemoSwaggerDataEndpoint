@@ -4,9 +4,9 @@ let SwaggerParser = require("swagger-parser");
 
 exports.handler = function (event, context, callback) {
 
-    // console.log(event);
+    console.log(event);
 
-    let swaggerDef = event.body;
+    let swaggerDef = JSON.parse(event);
     console.log(swaggerDef);
 
     SwaggerParser.validate(swaggerDef)
@@ -19,20 +19,13 @@ exports.handler = function (event, context, callback) {
 
             ddb.put({
                 TableName: 'SwaggerDetails',
-                Item: { 'apiName': apiName, 'apiVersion': apiVersion, 'definition': swaggerDef }
+                Item: { 'apiName': apiName, 'apiVersion': apiVersion, 'definition': JSON.stringify(swaggerDef) }
             }).promise()
                 .then((data) => {
                     console.log("Successfully added API definition to DB", data);
                     callback(null, {
-                        "isBase64Encoded": true,
-                        "statusCode": 200,
-                        "headers": {
-                            "headeAccess-Control-Allow-OriginrName": "*"
-                        },
-                        "body": JSON.stringify({
-                            "apiName": apiName,
-                            "apiVersion": apiVersion
-                        })
+                        "apiName": apiName,
+                        "apiVersion": apiVersion
                     });
 
                 }).catch((err) => {
