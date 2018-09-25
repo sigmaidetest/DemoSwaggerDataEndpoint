@@ -7,7 +7,6 @@ exports.handler = function (event, context, callback) {
     let apiName = event.apiName;
 
     console.log("Subscribing user for API", username, apiName);
-
     ddb.put({
         TableName: 'UserSwaggerSubscriptions',
         Item: { 'username': username, 'apiName': apiName }
