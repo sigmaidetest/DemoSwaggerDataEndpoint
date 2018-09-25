@@ -1,5 +1,7 @@
 {
   "name": "DemoSwaggerDataEndpoint",
   "version": "1.0.0",
-  "dependencies": {}
+  "dependencies": {
+    "swagger-parser": "5.0.5"
+  }
 }
