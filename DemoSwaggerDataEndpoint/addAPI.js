@@ -4,9 +4,9 @@ let SwaggerParser = require("swagger-parser");
 
 exports.handler = function (event, context, callback) {
 
-    console.log(event);
+    // console.log(event);
 
-    let swaggerDef = JSON.parse(event);
+    let swaggerDef = event;
     console.log(swaggerDef);
 
     SwaggerParser.validate(swaggerDef)
