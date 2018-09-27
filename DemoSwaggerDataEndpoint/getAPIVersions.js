@@ -8,7 +8,7 @@ exports.handler = function (event, context, callback) {
 
     ddb.query({
         TableName: 'SwaggerDetails',
-        ExpressionAttributeValues: { ':apiName': 'Swagger Petstore' },
+        ExpressionAttributeValues: { ':apiName': apiName },
         KeyConditionExpression: 'apiName = :apiName'
     }).promise()
         .then((data) => {
@@ -39,4 +39,6 @@ exports.handler = function (event, context, callback) {
                 "body": JSON.stringify([])
             });
         });
+
+        
 }
