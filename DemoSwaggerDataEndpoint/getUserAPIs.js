@@ -29,7 +29,14 @@ exports.handler = function (event, context, callback) {
 
         }).catch((err) => {
             console.log("Error occurred while retriving data", err);
-            callback(err);
+            callback(null, {
+                "isBase64Encoded": true,
+                "statusCode": 200,
+                "headers": {
+                    "Access-Control-Allow-Origin": "*"
+                },
+                "body": JSON.stringify([])
+            });
         });
 
 

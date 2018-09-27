@@ -8,7 +8,7 @@ exports.handler = function (event, context, callback) {
 
     ddb.query({
         TableName: 'SwaggerDetails',
-        ExpressionAttributeValues: { ':apiName': apiName },
+        ExpressionAttributeValues: { ':apiName': 'Swagger Petstore' },
         KeyConditionExpression: 'apiName = :apiName'
     }).promise()
         .then((data) => {
@@ -30,6 +30,13 @@ exports.handler = function (event, context, callback) {
 
         }).catch((err) => {
             console.log("Error occurred while retriving data", err);
-            callback(err);
+            callback(null, {
+                "isBase64Encoded": true,
+                "statusCode": 200,
+                "headers": {
+                    "Access-Control-Allow-Origin": "*"
+                },
+                "body": JSON.stringify([])
+            });
         });
 }
