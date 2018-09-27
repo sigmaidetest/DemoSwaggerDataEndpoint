@@ -9,23 +9,26 @@ exports.handler = function (event, context, callback) {
     ddb.query({
         TableName: 'UserSwaggerSubscriptions',
         ExpressionAttributeValues: {
-            ':username': username
+            ':userName': username
         },
-        KeyConditionExpression: ' S :'
+        KeyConditionExpression: 'username = :userName'
     }).promise()
         .then((data) => {
-            console.log("Retrived data", data);
+            let items = data.Items;
+            console.log("Retrived items", items);
+
+            let userAPIs = items.map(item => item['apiName']);
             callback(null, {
                 "isBase64Encoded": true,
                 "statusCode": 200,
                 "headers": {
                     "Access-Control-Allow-Origin": "*"
                 },
-                "body": JSON.stringify([])
+                "body": JSON.stringify(userAPIs)
             });
 
         }).catch((err) => {
-            console.log("Error occurred while retrived data", err);
+            console.log("Error occurred while retriving data", err);
             callback(err);
         });
 
